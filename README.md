@@ -10,7 +10,7 @@ Command line tool for downloading National Land Survey [KM2-dataset](https://www
 
 Usage:
 
-   bash download_and_optimize_dem_data.sh <area-code> <optional_clipper_file>
+  bash download_and_optimize_dem_data.sh <area_code> <optional_clipper_file>
 
 Area-code values can be found config.json, "HSL", "WALTTI", "TEST".
 
