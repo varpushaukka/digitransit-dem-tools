@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "rovaniemi",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "ogc_fid": 7, "layer": "rovaniemi" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 24.634987, 66.147037 ], [ 24.634987, 67.180128 ], [ 27.373531, 67.180128 ], [ 27.373531, 66.147037 ], [ 24.634987, 66.147037 ] ] ] } }
+]
+}
