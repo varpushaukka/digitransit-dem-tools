@@ -15,12 +15,9 @@ File | Description
 ### Prerequisites
 
 * [NLS Updating service interface API key](https://www.maanmittauslaitos.fi/en/e-services/open-data-file-download-service/open-data-file-updating-service-interface)
-* Python 3.4 <
- - requests
+* Python 3
 * Bash
 * GDAL
- - gdal-bin
- - gdal-python
 
 ### Installing
 
