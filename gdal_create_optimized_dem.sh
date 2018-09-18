@@ -70,7 +70,7 @@ fi
 
 echo_time "2. Reproject to WGS84"
 
-gdalwarp -of GTiff -srcnodata 99999 -dstnodata 99999 -s_srs EPSG:3067 -t_srs EPSG:4326 -r bilinear -multi -wo NUM_THREADS=ALL_CPUS -wo OPTIMIZE_SIZE -co COMPRESS=LZW -co BIGTIFF=YES -co TILED=YES --config GDAL_CACHEMAX 500 -wm 500 $initial_cut $reproj
+gdalwarp -of GTiff -srcnodata 99999 -dstnodata 99999 -s_srs EPSG:3067 -t_srs EPSG:4326 -r bilinear -wo OPTIMIZE_SIZE -co COMPRESS=LZW -co BIGTIFF=YES -co TILED=YES --config GDAL_CACHEMAX 500 -wm 500 $initial_cut $reproj
 
 echo_time "3. Converting elevation unit from meters to decimeters. Round 32 bit floats to 16 bit unsigned integers. NoData is 0."
 
