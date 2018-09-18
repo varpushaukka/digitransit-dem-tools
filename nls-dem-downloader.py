@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 """
-Command line script for downloading KM2 Digital Elevation Model data set via NLS ATOM feed.
+Command line script for downloading KM2 and KM10 Digital Elevation Model dataset via NLS ATOM feed.
 
-Usage: python km2-dem-downloader.py -h
+Usage: python nls-dem-downloader.py -h
 
 config.json contains NLS API key and map tile keys as lists for HSL and WALTTI areas. The script uses map tile keys
 to parse the full KM2 product list for needed files.
@@ -34,7 +34,7 @@ import requests
 def request_product_url_to_etree(url):
     try:
         logging.info('Requesting product list from NLS API: {}'.format(url))
-        r = requests.get(url)
+        r = requests.get(url, timeout=60)
     except requests.exceptions.RequestException as e:
         logging.critical('Error while requesting URL {url}: {error}'.format(url=url, error=e))
         sys.exit(1)
@@ -67,6 +67,7 @@ def parse_products(tiles, search_keys):
     logging.info('Searching downloaded product list for search keys...')
 
     tiles_set = set(tiles)
+    print(tiles_set)
     search_keys = set(search_keys)
 
     found = search_keys & tiles_set
@@ -104,16 +105,23 @@ def load_conf(args):
         config = json.load(f)
 
     api_token = config['API_TOKEN']
-    search_keys = config[args.area_key]
-    product_url = 'https://tiedostopalvelu.maanmittauslaitos.fi/tp/feed/mtp/korkeusmalli/hila_2m?format=image/tiff&api_key={0}'.format(
-        api_token)
+
+    if args.km10:
+        dataset = 'hila_10m'
+        search_keys = config['KM10'][args.area_key]
+    else:
+        dataset = 'hila_2m'
+        search_keys = config['KM2'][args.area_key]
+
+    product_url = 'https://tiedostopalvelu.maanmittauslaitos.fi/tp/feed/mtp/korkeusmalli/{0}?format=image/tiff&api_key={1}'.format(
+        dataset, api_token)
 
     return search_keys, product_url, args.output_dir
 
 
 def parse_args():
     description = '''
-    Download NLS KM2 Digital Elevation Model data set via NLS ATOM feed. More info:
+    Download NLS KM2 or KM10 Digital Elevation Model dataset via NLS ATOM feed. More info:
     https://www.maanmittauslaitos.fi/en/e-services/open-data-file-download-service/open-data-file-updating-service-interface
 
     Example
@@ -121,10 +129,12 @@ def parse_args():
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument("config_json", type=str,
                         help="config.json containing API key and predefined tiles for different areas")
-    parser.add_argument("area_key", type=str, help="'HSL' or 'WALTTI'")
+    parser.add_argument("area_key", type=str, help="'HSL', 'WALTTI' etc.")
     parser.add_argument("output_dir", type=str, help="Output directory")
 
     parser.add_argument("-v", "--verbose", help="Write script output to stdout",
+                        action="store_true")
+    parser.add_argument("-km10", "--km10", help="Download KM10 tiles instead of default KM2 tiles",
                         action="store_true")
 
     return parser.parse_args()
@@ -135,8 +145,6 @@ def prep(s):
 
 
 def main():
-    start_time = time.process_time()
-
     logging.basicConfig(filename='mml-atom_downloader.log', level=logging.INFO, format='%(asctime)s %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
     logging.getLogger('requests').setLevel(logging.ERROR)
@@ -158,7 +166,7 @@ def main():
     # Download found tiles to output_dir
     download_files(found_tiles, all_tiles, output_dir)
 
-    logging.info('Execution time: {:0.1f} min'.format((time.process_time() - start_time) / 60))
+    logging.info('Finished executing nls-dem-downloader.py.')
 
 
 if __name__ == "__main__":
