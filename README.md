@@ -6,9 +6,9 @@ Command line tool for downloading National Land Survey [KM2-dataset](https://www
 
 File | Description
 --- | --- 
-`km2-dem-downloader.py` | Downloads KM2-dataset tiles from NLS API
-`gdal_create_optimized_dem.sh` |  Crops and optimizes KM2-dataset tiles into a single GeoTiff using commandline GDAL binaries and gdal_calc.py 
-`download_and_optimize_dem_data.sh` | Chains together `km2-dem-downloader.py` and `gdal_create_optimized_dem.sh`
+`nls-dem-downloader.py` | Downloads KM2 and KM10 DEM dataset tiles from NLS API
+`gdal_create_optimized_dem.sh` |  Crops and optimizes DEM dataset tiles into a single GeoTiff using commandline GDAL binaries and gdal_calc.py 
+`download_and_optimize_dem_data.sh` | Chains together `nls-dem-downloader.py` and `gdal_create_optimized_dem.sh`
 `config.json` | Contains NLS API token and predefined tiles for different Digitransit areas (HSL, Waltti and cities)
 
 > **Note!** For optimization reasons the unit of elevation in the final GeoTIFF is **decimeters**.
@@ -93,6 +93,7 @@ OULU |
 ROVANIEMI |
 TAMPERE |
 TURKU |
+TEST |
 
 Pre-made area specific clippers based on Digitransit UI search extent [configurations](https://github.com/HSLdevcom/digitransit-ui/tree/master/app/configurations) are available in GeoJSON format in `area-extents/`
 

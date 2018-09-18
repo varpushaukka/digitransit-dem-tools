@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Description:
-# Chains together km2-dem-downloader.py and gdal_create_optimized_dem.sh
+# Chains together nls-dem-downloader.py and gdal_create_optimized_dem.sh
 # Check the afromentioned files for more documentation.
 
 # Usage:
@@ -38,7 +38,7 @@ dem_data_dl_dir="km2-data-$(date +"%Y%m%d_%H%M")"
 file_paths="km2_tif_file_paths-$(date +"%Y%m%d_%H%M").txt"
 dataset_vrt="$dataset-$(date +"%Y%m%d_%H%M").vrt"
 
-echo "1. Starting download script km2-dem-downloader.py for getting raster elevation data from NLS API"
+echo "1. Starting download script nls-dem-downloader.py for getting raster elevation data from NLS API"
 mkdir -p $output_dir/$dem_data_dl_dir
 python km2-dem-downloader.py config.json $dataset $output_dir/$dem_data_dl_dir -v
 

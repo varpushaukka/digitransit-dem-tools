@@ -34,7 +34,8 @@ import requests
 def request_product_url_to_etree(url):
     try:
         logging.info('Requesting product list from NLS API: {}'.format(url))
-        r = requests.get(url, timeout=60)
+        r = requests.get(url, timeout=300)
+        r.raise_for_status()
     except requests.exceptions.RequestException as e:
         logging.critical('Error while requesting URL {url}: {error}'.format(url=url, error=e))
         sys.exit(1)

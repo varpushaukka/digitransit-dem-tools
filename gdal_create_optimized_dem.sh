@@ -46,8 +46,8 @@ else
     echo "    gdal_create_optimized_dem.sh my_input_file.vrt my-output-dir my-area.geojson"
 	echo ""
 	echo "Creates an optimized GeoTIFF DEM file from files provided by my_input_file.vrt clipped to cutline of file my-area.geojson in my-output-dir."
-	echo "Input and clipping supports any OGR and multipolygon format (GeoJSON, Shapefile etc.) Area outside of clipper is written to NoData."
-	echo "Reprojects to WGS84 and expects the input data to be in EPSG:3067."
+	echo "Input supports any GDAL raster format (VRT, GeoTIFF etc. and clipping supports any OGR vector format (GeoJSON, Shapefile etc.) Area outside of clipper is written to NoData."
+	echo "Input data is expected to be in EPSG:3067 and the output is reprojected to EPSG:4326."
 	exit 1
 fi
 
