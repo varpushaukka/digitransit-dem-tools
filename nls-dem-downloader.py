@@ -108,13 +108,16 @@ def load_conf(args):
     api_token = config['API_TOKEN']
 
     if args.km10:
-        dataset = 'hila_10m'
+        dataset = 'korkeusmalli/hila_10m'
         search_keys = config['KM10'][args.area_key]
+    elif args.orto:
+        dataset = 'orto/ortokuva'
+        search_keys = config['KM2'][args.area_key]
     else:
-        dataset = 'ortokuva'
+        dataset = 'korkeusmalli/hila_2m'
         search_keys = config['KM2'][args.area_key]
 
-    product_url = 'https://tiedostopalvelu.maanmittauslaitos.fi/tp/feed/mtp/orto/{0}?format=image/jp2&api_key={1}'.format(
+    product_url = 'https://tiedostopalvelu.maanmittauslaitos.fi/tp/feed/mtp/{0}?format=image/tiff&api_key={1}'.format(
         dataset, api_token)
 
     return search_keys, product_url, args.output_dir
@@ -136,6 +139,8 @@ def parse_args():
     parser.add_argument("-v", "--verbose", help="Write script output to stdout",
                         action="store_true")
     parser.add_argument("-km10", "--km10", help="Download KM10 tiles instead of default KM2 tiles",
+                        action="store_true")
+    parser.add_argument("-orto", "--orto", help="Download orto tiles instead of default KM2 tiles",
                         action="store_true")
 
     return parser.parse_args()
