@@ -111,10 +111,10 @@ def load_conf(args):
         dataset = 'hila_10m'
         search_keys = config['KM10'][args.area_key]
     else:
-        dataset = 'hila_2m'
+        dataset = 'ortokuva'
         search_keys = config['KM2'][args.area_key]
 
-    product_url = 'https://tiedostopalvelu.maanmittauslaitos.fi/tp/feed/mtp/korkeusmalli/{0}?format=image/tiff&api_key={1}'.format(
+    product_url = 'https://tiedostopalvelu.maanmittauslaitos.fi/tp/feed/mtp/orto/{0}?format=image/jp2&api_key={1}'.format(
         dataset, api_token)
 
     return search_keys, product_url, args.output_dir
